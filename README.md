@@ -8,7 +8,7 @@
 - docker run -d -p 8081:80 web1_httpd
 - docker run -d -p 8082:80 web2_httpd
 - docker run -d -p 8083:80 web3_nginx
- docker run -d -p 8084:80 web4_nginx
+- docker run -d -p 8084:80 web4_nginx
 
 # How to stop
 - docker stop web1
