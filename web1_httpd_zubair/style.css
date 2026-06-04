@@ -1,0 +1,994 @@
+/* ============================================
+   CSS Variables & Base Styles
+   ============================================ */
+:root {
+    --bg: #0a0a0b;
+    --bg-secondary: #111113;
+    --fg: #f5f5f4;
+    --muted: #a8a29e;
+    --accent: #00a846;
+    --accent-light: #0d00c4;
+    --card: #18181b;
+    --border: #27272a;
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+html {
+    scroll-behavior: smooth;
+}
+
+body {
+    font-family: 'DM Sans', sans-serif;
+    background-color: var(--bg);
+    color: var(--fg);
+    overflow-x: hidden;
+    line-height: 1.6;
+}
+
+/* ============================================
+   Typography
+   ============================================ */
+.font-display {
+    font-family: 'Cormorant Garamond', serif;
+}
+
+.text-accent {
+    color: var(--accent);
+}
+
+.text-highlight {
+    color: var(--fg);
+    font-weight: 500;
+}
+
+/* ============================================
+   Layout Components
+   ============================================ */
+.container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 1rem;
+}
+
+.main-wrapper {
+    position: relative;
+    z-index: 10;
+    min-height: 100vh;
+}
+
+/* ============================================
+   Animated Background
+   ============================================ */
+.bg-pattern {
+    position: fixed;
+    inset: 0;
+    z-index: 0;
+    overflow: hidden;
+}
+
+.bg-pattern::before {
+    content: '';
+    position: absolute;
+    top: -50%;
+    left: -50%;
+    width: 200%;
+    height: 200%;
+    background: radial-gradient(ellipse at 20% 30%, rgba(212, 168, 83, 0.08) 0%, transparent 50%),
+                radial-gradient(ellipse at 80% 70%, rgba(212, 168, 83, 0.05) 0%, transparent 40%);
+    animation: bgFloat 20s ease-in-out infinite;
+}
+
+@keyframes bgFloat {
+    0%, 100% { transform: translate(0, 0) rotate(0deg); }
+    50% { transform: translate(-2%, -2%) rotate(1deg); }
+}
+
+.grid-overlay {
+    position: fixed;
+    inset: 0;
+    z-index: 1;
+    background-image: 
+        linear-gradient(rgba(212, 168, 83, 0.03) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(212, 168, 83, 0.03) 1px, transparent 1px);
+    background-size: 60px 60px;
+    pointer-events: none;
+}
+
+/* ============================================
+   Floating Particles
+   ============================================ */
+.particle {
+    position: fixed;
+    width: 2px;
+    height: 2px;
+    background: var(--accent);
+    border-radius: 50%;
+    pointer-events: none;
+    opacity: 0;
+    animation: particleFloat 8s ease-in-out infinite;
+}
+
+@keyframes particleFloat {
+    0% { opacity: 0; transform: translateY(100vh) scale(0); }
+    10% { opacity: 0.6; }
+    90% { opacity: 0.6; }
+    100% { opacity: 0; transform: translateY(-100px) scale(1); }
+}
+
+/* ============================================
+   Header & Navigation
+   ============================================ */
+.site-header {
+    position: sticky;
+    top: 0;
+    z-index: 50;
+    backdrop-filter: blur(20px);
+    background: rgba(10, 10, 11, 0.8);
+    border-bottom: 1px solid var(--border);
+}
+
+.navbar {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 1rem 0;
+}
+
+.logo {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 1.5rem;
+    font-weight: 700;
+    color: var(--accent);
+    text-decoration: none;
+}
+
+.nav-tabs {
+    display: flex;
+    align-items: center;
+    gap: 0.25rem;
+}
+
+.nav-tab {
+    position: relative;
+    padding: 0.75rem 1.25rem;
+    color: var(--muted);
+    font-weight: 500;
+    font-size: 0.875rem;
+    transition: all 0.3s ease;
+    cursor: pointer;
+    border-radius: 8px;
+    background: none;
+    border: none;
+}
+
+.nav-tab::after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 50%;
+    width: 0;
+    height: 2px;
+    background: linear-gradient(90deg, var(--accent), var(--accent-light));
+    transition: all 0.3s ease;
+    transform: translateX(-50%);
+}
+
+.nav-tab:hover {
+    color: var(--fg);
+}
+
+.nav-tab:focus {
+    outline: 2px solid var(--accent);
+    outline-offset: 2px;
+}
+
+.nav-tab.active {
+    color: var(--accent);
+}
+
+.nav-tab.active::after {
+    width: 60%;
+}
+
+/* ============================================
+   Main Content
+   ============================================ */
+.main-content {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 3rem 1rem;
+}
+
+.tab-content {
+    display: none;
+    opacity: 0;
+    transform: translateY(20px);
+}
+
+.tab-content.active {
+    display: block;
+    animation: fadeInUp 0.5s ease forwards;
+}
+
+@keyframes fadeInUp {
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+/* ============================================
+   Section Styles
+   ============================================ */
+.section-header {
+    margin-bottom: 3rem;
+}
+
+.section-label {
+    color: var(--accent);
+    font-weight: 500;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    font-size: 0.875rem;
+    margin-bottom: 0.5rem;
+}
+
+.section-title {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: clamp(2rem, 5vw, 3rem);
+    font-weight: 700;
+}
+
+.section-wrapper {
+    max-width: 800px;
+}
+
+/* ============================================
+   Cards
+   ============================================ */
+.card {
+    background: linear-gradient(145deg, var(--card) 0%, rgba(24, 24, 27, 0.6) 100%);
+    border: 1px solid var(--border);
+    border-radius: 16px;
+    padding: 1.5rem;
+    transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+    position: relative;
+    overflow: hidden;
+}
+
+.card::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(145deg, rgba(212, 168, 83, 0.1) 0%, transparent 50%);
+    opacity: 0;
+    transition: opacity 0.4s ease;
+}
+
+.card:hover {
+    transform: translateY(-4px);
+    border-color: rgba(212, 168, 83, 0.3);
+    box-shadow: 0 20px 40px -10px rgba(0, 0, 0, 0.5),
+                0 0 30px -10px rgba(212, 168, 83, 0.15);
+}
+
+.card:hover::before {
+    opacity: 1;
+}
+
+/* ============================================
+   About Section
+   ============================================ */
+.about-grid {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 3rem;
+    align-items: center;
+}
+
+@media (min-width: 1024px) {
+    .about-grid {
+        grid-template-columns: auto 1fr;
+        gap: 4rem;
+    }
+}
+
+.profile-wrapper {
+    display: flex;
+    justify-content: center;
+}
+
+@media (min-width: 1024px) {
+    .profile-wrapper {
+        justify-content: flex-start;
+    }
+}
+
+.profile-container {
+    position: relative;
+    width: 200px;
+    height: 200px;
+}
+
+@media (min-width: 768px) {
+    .profile-container {
+        width: 250px;
+        height: 250px;
+    }
+}
+
+.profile-ring {
+    position: absolute;
+    inset: -8px;
+    border-radius: 50%;
+    background: conic-gradient(from 0deg, var(--accent), var(--accent-light), var(--accent));
+    animation: ringRotate 8s linear infinite;
+}
+
+@keyframes ringRotate {
+    to { transform: rotate(360deg); }
+}
+
+/* ... kode sebelumnya tetap ... */
+
+.profile-image {
+    position: relative;
+    width: 100%;
+    height: 100%;
+    border-radius: 50%;
+    background: var(--card);
+    border: 4px solid var(--bg);
+    overflow: hidden; /* Penting: memotong bagian gambar yang keluar dari lingkaran */
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.profile-image img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    
+    /* === TAMBAHAN KODE DI BAWAH INI === */
+    
+    /* 1. PERBESAR UKURAN (Zoom) 
+       Ubah angka 1.3 sesuai kebutuhan. 
+       Coba 1.5 jika masih kekecilan, atau 1.2 jika sudah pas. */
+    transform: scale(1.3);
+    
+    /* 2. GESER FOKUS KE ATAS (Agar wajah terlihat)
+       Gunakan 'center top' jika wajah ada di bagian atas foto.
+       Jika wajah agak di kanan, coba 'right top'. */
+    object-position: center top;
+    
+    /* Efek transisi halus */
+    transition: transform 0.3s ease;
+}
+
+.profile-placeholder {
+    color: var(--muted);
+    font-size: 0.875rem;
+    text-align: center;
+    padding: 1rem;
+}
+
+/* Bio Content */
+.bio-content {
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+}
+
+.bio-header {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+}
+
+.bio-label {
+    color: var(--accent);
+    font-weight: 500;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    font-size: 0.875rem;
+}
+
+.bio-title {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: clamp(2.5rem, 6vw, 4rem);
+    font-weight: 700;
+    line-height: 1.1;
+}
+
+.bio-description {
+    font-size: 1.125rem;
+    color: var(--muted);
+    line-height: 1.7;
+}
+
+/* CTA Buttons */
+.cta-buttons {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 1rem;
+    padding-top: 1rem;
+}
+
+.btn-primary {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    padding: 0.875rem 2rem;
+    background: linear-gradient(135deg, var(--accent) 0%, var(--accent-light) 100%);
+    color: var(--bg);
+    font-weight: 600;
+    border-radius: 12px;
+    text-decoration: none;
+    transition: all 0.3s ease;
+    position: relative;
+    overflow: hidden;
+}
+
+.btn-primary::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(135deg, var(--accent-light) 0%, var(--accent) 100%);
+    opacity: 0;
+    transition: opacity 0.3s ease;
+}
+
+.btn-primary:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 10px 30px -10px rgba(212, 168, 83, 0.5);
+}
+
+.btn-primary:hover::before {
+    opacity: 1;
+}
+
+.btn-primary span,
+.btn-primary svg {
+    position: relative;
+    z-index: 1;
+}
+
+.btn-secondary {
+    padding: 0.875rem 2rem;
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    color: var(--muted);
+    text-decoration: none;
+    transition: all 0.3s ease;
+}
+
+.btn-secondary:hover {
+    border-color: var(--accent);
+    color: var(--fg);
+}
+
+/* Stats Grid */
+.stats-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 1.5rem;
+    padding-top: 2rem;
+    border-top: 1px solid var(--border);
+    margin-top: 0.5rem;
+}
+
+.stat-item {
+    text-align: left;
+}
+
+.stat-number {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 2rem;
+    font-weight: 700;
+    color: var(--accent);
+}
+
+.stat-label {
+    font-size: 0.75rem;
+    color: var(--muted);
+}
+
+@media (min-width: 768px) {
+    .stat-number {
+        font-size: 2.5rem;
+    }
+    
+    .stat-label {
+        font-size: 0.875rem;
+    }
+}
+
+/* ============================================
+   Experience Section
+   ============================================ */
+.timeline {
+    display: flex;
+    flex-direction: column;
+}
+
+.timeline-item {
+    position: relative;
+    padding-left: 2rem;
+    padding-bottom: 2rem;
+    border-left: 2px solid var(--border);
+}
+
+.timeline-item::before {
+    content: '';
+    position: absolute;
+    left: -7px;
+    top: 0;
+    width: 12px;
+    height: 12px;
+    background: var(--accent);
+    border-radius: 50%;
+    box-shadow: 0 0 20px rgba(212, 168, 83, 0.5);
+}
+
+.timeline-item:last-child {
+    border-left: 2px solid transparent;
+    padding-bottom: 0;
+}
+
+.card-header {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: flex-start;
+    justify-content: space-between;
+    gap: 1rem;
+    margin-bottom: 1rem;
+}
+
+.card-title {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 1.25rem;
+    font-weight: 700;
+}
+
+.card-subtitle {
+    color: var(--accent);
+    font-size: 0.875rem;
+}
+
+.card-description {
+    color: var(--muted);
+    line-height: 1.7;
+}
+
+.date-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    padding: 0.375rem 0.875rem;
+    background: rgba(212, 168, 83, 0.15);
+    border: 1px solid rgba(212, 168, 83, 0.3);
+    border-radius: 20px;
+    font-size: 0.75rem;
+    color: var(--accent-light);
+    font-weight: 500;
+}
+
+.tech-tags {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+    margin-top: 1rem;
+}
+
+.tech-tag {
+    padding: 0.25rem 0.75rem;
+    background: var(--border);
+    border-radius: 9999px;
+    font-size: 0.75rem;
+}
+
+/* ============================================
+   Skills Section
+   ============================================ */
+.skills-grid {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 1.5rem;
+}
+
+@media (min-width: 640px) {
+    .skills-grid {
+        grid-template-columns: repeat(2, 1fr);
+    }
+}
+
+@media (min-width: 1024px) {
+    .skills-grid {
+        grid-template-columns: repeat(3, 1fr);
+    }
+}
+
+.skill-card {
+    position: relative;
+}
+
+.skill-header {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    margin-bottom: 1rem;
+}
+
+.skill-icon {
+    width: 48px;
+    height: 48px;
+    border-radius: 12px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: transform 0.3s ease;
+}
+
+.skill-card:hover .skill-icon {
+    transform: scale(1.1);
+}
+
+/* Skill Icon Colors */
+.html-icon {
+    background: linear-gradient(135deg, rgba(249, 115, 22, 0.2), rgba(249, 115, 22, 0.1));
+    color: #f97316;
+}
+
+.css-icon {
+    background: linear-gradient(135deg, rgba(59, 130, 246, 0.2), rgba(59, 130, 246, 0.1));
+    color: #3b82f6;
+}
+
+.js-icon {
+    background: linear-gradient(135deg, rgba(234, 179, 8, 0.2), rgba(234, 179, 8, 0.1));
+    color: #eab308;
+}
+
+.figma-icon {
+    background: linear-gradient(135deg, rgba(168, 85, 247, 0.2), rgba(168, 85, 247, 0.1));
+    color: #a855f7;
+}
+
+.vscode-icon {
+    background: linear-gradient(135deg, rgba(6, 182, 212, 0.2), rgba(6, 182, 212, 0.1));
+    color: #06b6d4;
+}
+
+.canva-icon {
+    background: linear-gradient(135deg, rgba(20, 184, 166, 0.2), rgba(20, 184, 166, 0.1));
+    color: #14b8a6;
+}
+
+.capcut-icon {
+    background: linear-gradient(135deg, rgba(239, 68, 68, 0.2), rgba(239, 68, 68, 0.1));
+    color: #ef4444;
+}
+
+.tailwind-icon {
+    background: linear-gradient(135deg, rgba(14, 165, 233, 0.2), rgba(14, 165, 233, 0.1));
+    color: #0ea5e9;
+}
+
+.react-icon {
+    background: linear-gradient(135deg, rgba(56, 189, 248, 0.2), rgba(56, 189, 248, 0.1));
+    color: #38bdf8;
+}
+
+.skill-info {
+    flex: 1;
+}
+
+.skill-name {
+    font-weight: 600;
+    margin-bottom: 0.125rem;
+}
+
+.skill-type {
+    font-size: 0.75rem;
+    color: var(--muted);
+}
+
+.skill-bar {
+    height: 6px;
+    background: var(--border);
+    border-radius: 3px;
+    overflow: hidden;
+}
+
+.skill-progress {
+    height: 100%;
+    background: linear-gradient(90deg, var(--accent), var(--accent-light));
+    border-radius: 3px;
+    transform-origin: left;
+    transform: scaleX(0);
+    transition: transform 1s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.skill-progress.animate {
+    transform: scaleX(1);
+}
+
+.skill-percent {
+    text-align: right;
+    font-size: 0.875rem;
+    color: var(--muted);
+    margin-top: 0.5rem;
+}
+
+/* ============================================
+   Certificates Section
+   ============================================ */
+.certificates-grid {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 1.5rem;
+}
+
+@media (min-width: 768px) {
+    .certificates-grid {
+        grid-template-columns: repeat(2, 1fr);
+    }
+}
+
+.cert-card {
+    transition: all 0.3s ease;
+}
+
+.cert-card:hover .cert-icon {
+    transform: scale(1.1);
+}
+
+.cert-content {
+    display: flex;
+    align-items: flex-start;
+    gap: 1rem;
+}
+
+.cert-icon {
+    width: 64px;
+    height: 64px;
+    border-radius: 12px;
+    background: linear-gradient(135deg, rgba(212, 168, 83, 0.2), rgba(212, 168, 83, 0.1));
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+    color: var(--accent);
+    transition: transform 0.3s ease;
+}
+
+.cert-info {
+    flex: 1;
+}
+
+.cert-title {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 1.125rem;
+    font-weight: 700;
+    margin-bottom: 0.25rem;
+}
+
+.cert-issuer {
+    color: var(--accent);
+    font-size: 0.875rem;
+    margin-bottom: 0.5rem;
+}
+
+.cert-description {
+    color: var(--muted);
+    font-size: 0.875rem;
+    line-height: 1.6;
+}
+
+.cert-meta {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    margin-top: 0.75rem;
+}
+
+.verified-badge {
+    font-size: 0.75rem;
+    color: var(--muted);
+}
+
+/* ============================================
+   Contact Section
+   ============================================ */
+.contact-wrapper {
+    max-width: 600px;
+    margin: 0 auto;
+}
+
+.contact-header {
+    text-align: center;
+    margin-bottom: 3rem;
+}
+
+.contact-description {
+    color: var(--muted);
+    font-size: 1.125rem;
+    margin-top: 1rem;
+}
+
+.contact-links {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+}
+
+.contact-link {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    padding: 1rem 1.5rem;
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    transition: all 0.3s ease;
+    text-decoration: none;
+    color: var(--fg);
+}
+
+.contact-link:hover {
+    background: rgba(212, 168, 83, 0.1);
+    border-color: var(--accent);
+    transform: translateX(8px);
+}
+
+.contact-link:focus {
+    outline: 2px solid var(--accent);
+    outline-offset: 2px;
+}
+
+.contact-icon {
+    width: 40px;
+    height: 40px;
+    border-radius: 8px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: transform 0.3s ease;
+}
+
+.contact-link:hover .contact-icon {
+    transform: scale(1.1);
+}
+
+/* Contact Icon Colors */
+.whatsapp-icon {
+    background: rgba(34, 197, 94, 0.2);
+    color: #22c55e;
+}
+
+.instagram-icon {
+    background: linear-gradient(135deg, rgba(168, 85, 247, 0.2), rgba(236, 72, 153, 0.2));
+    color: #a855f7;
+}
+
+.github-icon {
+    background: rgba(156, 163, 175, 0.2);
+    color: #9ca3af;
+}
+
+.linkedin-icon {
+    background: rgba(59, 130, 246, 0.2);
+    color: #3b82f6;
+}
+
+.email-icon {
+    background: rgba(212, 168, 83, 0.2);
+    color: var(--accent);
+}
+
+.contact-text {
+    flex: 1;
+}
+
+.contact-name {
+    font-weight: 600;
+}
+
+.contact-value {
+    font-size: 0.875rem;
+    color: var(--muted);
+}
+
+.arrow-icon {
+    color: var(--muted);
+    transition: transform 0.3s ease;
+}
+
+.contact-link:hover .arrow-icon {
+    transform: translateX(4px);
+}
+
+/* ============================================
+   Footer
+   ============================================ */
+.site-footer {
+    border-top: 1px solid var(--border);
+    padding: 2rem 0;
+    margin-top: 3rem;
+}
+
+.footer-text {
+    text-align: center;
+    color: var(--muted);
+    font-size: 0.875rem;
+}
+
+/* ============================================
+   Reveal Animation
+   ============================================ */
+.reveal {
+    opacity: 0;
+    transform: translateY(30px);
+    transition: all 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.reveal.visible {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+/* ============================================
+   Reduced Motion
+   ============================================ */
+@media (prefers-reduced-motion: reduce) {
+    *,
+    *::before,
+    *::after {
+        animation-duration: 0.01ms !important;
+        animation-iteration-count: 1 !important;
+        transition-duration: 0.01ms !important;
+    }
+}
+
+/* ============================================
+   Mobile Responsive
+   ============================================ */
+@media (max-width: 768px) {
+    .nav-tabs {
+        flex-wrap: wrap;
+        justify-content: center;
+        gap: 0.125rem;
+    }
+
+    .nav-tab {
+        padding: 0.5rem 0.75rem;
+        font-size: 0.75rem;
+    }
+
+    .profile-container {
+        width: 150px;
+        height: 150px;
+    }
+
+    .stats-grid {
+        gap: 1rem;
+    }
+
+    .stat-number {
+        font-size: 1.5rem;
+    }
+
+    .cert-content {
+        flex-direction: column;
+    }
+
+    .cert-icon {
+        width: 48px;
+        height: 48px;
+    }
+}
